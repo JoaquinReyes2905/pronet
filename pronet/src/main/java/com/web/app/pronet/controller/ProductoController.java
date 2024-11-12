@@ -22,6 +22,6 @@ public class ProductoController {
     public String listarProductos(Model model) {
         List<Producto> productos = productoRepo.GetAllUsers();
         model.addAttribute("productos", productos);
-        return "lista";
+        return "lista_productos";
     }
 }
