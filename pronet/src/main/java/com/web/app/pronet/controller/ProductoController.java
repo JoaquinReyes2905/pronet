@@ -27,19 +27,26 @@ public class ProductoController {
         model.addAttribute("productos", productos);
         return "lista_productos";
     }
+    // Mostrar formulario para crear un producto
     @GetMapping("/nuevo")
     public String mostrarFormularioCreacion(Model model) {
         model.addAttribute("producto", new Producto());
         return "formulario";
     }
 
-// Guardar un nuevo producto
+    // Guardar un nuevo producto
     @PostMapping
     public String crearProducto(@ModelAttribute Producto producto) {
         productoRepo.createProducto(producto);
         return "redirect:/productos";
     }
-
+  // Mostrar formulario para editar un producto
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
+        Producto producto = productoRepo.getProductoById(id);
+        model.addAttribute("producto", producto);
+        return "formulario";
+    }
      // Eliminar un producto
     @GetMapping("/eliminar/{id}")
     public String eliminarProducto(@PathVariable Long id) {
