@@ -13,6 +13,8 @@ import com.web.app.pronet.services.ProductoService;
 
 import java.util.List;
 import com.web.app.pronet.models.Producto;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/productos")
@@ -31,7 +33,7 @@ public class ProductoController {
     @GetMapping("/nuevo")
     public String mostrarFormularioCreacion(Model model) {
         model.addAttribute("producto", new Producto());
-        return "formulario";
+        return "formulario_producto";
     }
 
     // Guardar un nuevo producto
@@ -45,8 +47,14 @@ public class ProductoController {
     public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
         Producto producto = productoRepo.getProductoById(id);
         model.addAttribute("producto", producto);
-        return "formulario";
+        return "editar_producto";
     }
+    @PostMapping("/editar/{id}")
+    public String actualizarProducto(@PathVariable Long id, @ModelAttribute Producto producto) {
+        productoRepo.updateProducto(id, producto);
+        return "redirect:/productos";
+    }
+    
      // Eliminar un producto
     @GetMapping("/eliminar/{id}")
     public String eliminarProducto(@PathVariable Long id) {
