@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.web.app.pronet.repo.*;
 import com.web.app.pronet.services.ProductoService;
@@ -20,8 +23,27 @@ public class ProductoController {
 
      @GetMapping
     public String listarProductos(Model model) {
-        List<Producto> productos = productoRepo.GetAllUsers();
+        List<Producto> productos = productoRepo.GetAllProductos();
         model.addAttribute("productos", productos);
         return "lista_productos";
+    }
+    @GetMapping("/nuevo")
+    public String mostrarFormularioCreacion(Model model) {
+        model.addAttribute("producto", new Producto());
+        return "formulario";
+    }
+
+// Guardar un nuevo producto
+    @PostMapping
+    public String crearProducto(@ModelAttribute Producto producto) {
+        productoRepo.createProducto(producto);
+        return "redirect:/productos";
+    }
+
+     // Eliminar un producto
+    @GetMapping("/eliminar/{id}")
+    public String eliminarProducto(@PathVariable Long id) {
+        productoRepo.deleteProducto(id);
+        return "redirect:/productos";
     }
 }

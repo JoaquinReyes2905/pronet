@@ -12,23 +12,23 @@ public class ProductoService {
     @Autowired
     private ProductoRepo repository;
 
-    public List<Producto> GetAllUsers() {
+    public List<Producto> GetAllProductos() {
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
-	public Producto createUser(Producto user) {
+	public Producto createProducto(Producto user) {
         return repository.save(user);
     }
-	public Producto getUserById(Long id) {
+	public Producto getProductoById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
-    public Producto updateUser(Long id, Producto user) {
+    public Producto updateProducto(Long id, Producto user) {
         user.setId(id);
         return repository.save(user);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteProducto(Long id) {
         repository.deleteById(id);
     }
 }
