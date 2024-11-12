@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.web.app.pronet.repo.*;
-
+import com.web.app.pronet.services.ProductoService;
 
 import java.util.List;
 import com.web.app.pronet.models.Producto;
@@ -16,14 +16,11 @@ import com.web.app.pronet.models.Producto;
 public class ProductoController {
 
     @Autowired
-    private final ProductoRepo productoRepo;
+    private ProductoService productoRepo;
 
-    public ProductoController(ProductoRepo productoRepo) {
-        this.productoRepo = productoRepo;
-    }
      @GetMapping
     public String listarProductos(Model model) {
-        List<Producto> productos = productoRepo.findAll();
+        List<Producto> productos = productoRepo.GetAllUsers();
         model.addAttribute("productos", productos);
         return "lista";
     }
